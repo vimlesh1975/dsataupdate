@@ -53,7 +53,7 @@ export default function Home() {
       <h1>Select a Run Order</h1>
       <select value={selectedUser} onChange={handleSelectionChange}>
         <option value="" disabled>Select a Run Order</option>
-        {users.map((user, i) => (
+        {users?.map((user, i) => (
           <option key={i} value={user.id}>{user.title}</option>
         ))}
       </select>
@@ -61,7 +61,7 @@ export default function Home() {
     </div>
     <div style={{display:'flex'}}>
     <div style={{minWidth:300}}>
-      {scripts.map((val, i) => {
+      {scripts?.map((val, i) => {
         return (
           <div key={i}>
            {i} <label onClick={()=>setScriptID(val.ScriptID)} style={{cursor:'pointer' }}>{val.SlugName} </label> <br />
