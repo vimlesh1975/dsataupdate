@@ -2,14 +2,14 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-export default function Home() {
+export default function Home({ScriptID}) {
   const [content, setContent] = useState('');
   const [timeoutId, setTimeoutId] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch('/api/getContent');
+        const res = await fetch(`/api/getContent?ScriptID=${ScriptID}`);
         const data = await res.json();
         setContent(data.content);
       } catch (error) {
@@ -18,7 +18,7 @@ export default function Home() {
     }
 
     fetchData();
-  }, []);
+  }, [ScriptID]);
 
   const handleContentChange = (e) => {
     const newContent = e.target.value;
@@ -35,7 +35,7 @@ export default function Home() {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ content: newContent }),
+          body: JSON.stringify({ content: newContent ,ScriptID}),
         });
         const data = await res.json();
         console.log(data.message);
@@ -53,8 +53,9 @@ export default function Home() {
       <textarea
         value={content}
         onChange={handleContentChange}
-        rows="10"
-        cols="50"
+        rows="30"
+        cols="110"
+        style={{fontSize:20}}
       />
     </div>
   );

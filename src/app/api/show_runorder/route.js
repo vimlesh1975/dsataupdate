@@ -1,12 +1,14 @@
-// app/api/getContent/route.js
 import pool from '../../db.js';
 
 export async function GET(req) {
   const { searchParams } = new URL(req.url);
-  const ScriptID = searchParams.get('ScriptID');
+  const param1 = searchParams.get('param1');
   try {
-    const [rows] = await pool.query(`SELECT Script FROM script where ScriptID='${ScriptID}' LIMIT 1`);
-    return new Response(JSON.stringify({ content: rows[0]?.Script || '' }), {
+    // const [rows] = await pool.query('SELECT * FROM podnewsusers');
+    // return new Response(JSON.stringify({ users: rows }), {
+    const [rows] = await pool.query(`CALL show_runorder('${param1}')`);
+
+    return new Response(JSON.stringify({ users: rows }), {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {

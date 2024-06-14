@@ -3,8 +3,8 @@ import pool from '../../db.js';
 
 export async function POST(req) {
   try {
-    const { content } = await req.json();
-    await pool.query('UPDATE script SET Script = ? LIMIT 1', [content]);
+    const { content, ScriptID } = await req.json();
+    await pool.query(`UPDATE script SET Script = ?  where ScriptID='${ScriptID}' LIMIT 1`, [content]);
     return new Response(JSON.stringify({ message: 'Content updated successfully' }), {
       headers: { 'Content-Type': 'application/json' },
     });

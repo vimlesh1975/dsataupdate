@@ -1,12 +1,15 @@
 // app/page.js
 'use client';
-import Script from './Script';
-import Users from './Users';
+
+// import Users from './Users';
+import RunOrders from './RunOrders';
 
 export default function Home() {
  
   return( <div>
-    <Users />
-    <Script />
+    {/* <Users /> */}
+   
+    <RunOrders />
+   
     </div>)
 }
