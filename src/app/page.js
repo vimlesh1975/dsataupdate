@@ -1,5 +1,5 @@
-// pages/index.js
-'use client'
+// app/page.js
+'use client';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
@@ -7,10 +7,13 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch('/api/users');
-      const data = await res.json();
-      console.log(data.dd[0])
-      setUsers(data.dd[0]);
+      try {
+        const res = await fetch('/api/users');
+        const data = await res.json();
+        setUsers(data.users);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
     }
 
     fetchData();
@@ -27,3 +30,4 @@ export default function Home() {
     </div>
   );
 }
+
