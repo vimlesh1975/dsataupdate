@@ -1,7 +1,10 @@
 // app/page.js
 'use client';
 import { useEffect, useState } from 'react';
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import 'react-tabs/style/react-tabs.css';
 import Script from './Script'
+import Graphics from './Graphics'
 
 export default function Home() {
   const [runOrderTitles, setRunOrderTitles] = useState([]);
@@ -52,7 +55,7 @@ export default function Home() {
 
   return (<div>
     <div style={{ display: 'flex' }}>
-      <div style={{ maxHeight: '100vh', border: '1px solid red', overflow:'auto' }}>
+      <div style={{ maxHeight: '100vh',minHeight: '100vh', border: '1px solid red', overflow:'auto' }}>
         <div >
           Run Orders:<select value={selectedRunOrderTitle} onChange={handleSelectionChange}>
             <option value="" disabled>Select a Run Order</option>
@@ -79,8 +82,25 @@ export default function Home() {
         </div>
       </div>
       <div style={{ margin: 10 }}>
-        <Script ScriptID={ScriptID} title={selectedRunOrderTitle + ' ' + currentSlugSlugName} />
-      </div>
+
+<Tabs>
+  <TabList>
+    <Tab>Graphics</Tab>
+    <Tab>Script</Tab>
+
+  </TabList>
+  <TabPanel>
+    <h2>Graphics</h2>
+    <Graphics />
+  </TabPanel>
+  <TabPanel>
+  <Script ScriptID={ScriptID} title={selectedRunOrderTitle + ' ' + currentSlugSlugName} />
+  </TabPanel>
+
+</Tabs>
+
+
+</div>
     </div>
   </div>);
 
