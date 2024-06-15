@@ -91,7 +91,7 @@ export default function Home() {
   </TabList>
   <TabPanel>
     <h2>Graphics</h2>
-    <Graphics />
+    <Graphics  ScriptID={ScriptID} title={selectedRunOrderTitle + ' ' + currentSlugSlugName}/>
   </TabPanel>
   <TabPanel>
   <Script ScriptID={ScriptID} title={selectedRunOrderTitle + ' ' + currentSlugSlugName} />
