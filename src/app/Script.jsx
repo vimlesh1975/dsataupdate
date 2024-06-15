@@ -49,7 +49,7 @@ export default function Home({ScriptID}) {
 
   return (
     <div>
-      <h1>Edit Content</h1>
+      Content:
       <textarea
         value={content}
         onChange={handleContentChange}

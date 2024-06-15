@@ -2,11 +2,8 @@ import pool from '../../db.js';
 
 export async function GET(req) {
   try {
-    // const [rows] = await pool.query('SELECT * FROM podnewsusers');
-    // return new Response(JSON.stringify({ users: rows }), {
     const [rows] = await pool.query('select title from newsid');
-
-    return new Response(JSON.stringify({ users: rows }), {
+    return new Response(JSON.stringify({ RunOrderTitles: rows }), {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {

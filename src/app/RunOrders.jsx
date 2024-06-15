@@ -4,10 +4,9 @@ import { useEffect, useState } from 'react';
 import Script from './Script'
 
 export default function Home() {
-  const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState('');
-  const [scripts, setScripts] = useState([]);
-
+  const [runOrderTitles, setRunOrderTitles] = useState([]);
+  const [selectedRunOrderTitle, setSelectedRunOrderTitle] = useState('');
+  const [slugs, setSlugs] = useState([]);
   const [ScriptID, setScriptID] = useState('');
 
 
@@ -16,10 +15,9 @@ export default function Home() {
       try {
         const res = await fetch('/api/runorder');
         const data = await res.json();
-        console.log(data)
-        setUsers(data.users);
+        setRunOrderTitles(data.RunOrderTitles);
       } catch (error) {
-        console.error('Error fetching users:', error);
+        console.error('Error fetching RunOrderTitles:', error);
       }
     }
 
@@ -29,52 +27,52 @@ export default function Home() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch(`/api/show_runorder?param1=${selectedUser}`);
+        const res = await fetch(`/api/show_runorder?param1=${selectedRunOrderTitle}`);
         const data = await res.json();
-        console.log(data.users[0])
-        setScripts(data.users[0]);
+        setSlugs(data.slugs);
       } catch (error) {
         console.error('Error fetching users:', error);
       }
     }
 
     fetchData();
-  }, [selectedUser]);
+  }, [selectedRunOrderTitle]);
 
 
   const handleSelectionChange = (e) => {
-    setSelectedUser(e.target.value);
+    setSelectedRunOrderTitle(e.target.value);
   };
 
 
 
   return (<div>
+<div style={{display:'flex'}}>
     <div>
-      <h1>Select a Run Order</h1>
-      <select value={selectedUser} onChange={handleSelectionChange}>
-        <option value="" disabled>Select a Run Order</option>
-        {users?.map((user, i) => (
-          <option key={i} value={user.id}>{user.title}</option>
-        ))}
-      </select>
-      {selectedUser && <p>Selected Run Order: {selectedUser}</p>}
-    </div>
-    <div style={{display:'flex'}}>
-    <div style={{minWidth:300}}>
-      {scripts?.map((val, i) => {
-        return (
-          <div key={i}>
-           {i} <label onClick={()=>setScriptID(val.ScriptID)} style={{cursor:'pointer' }}>{val.SlugName} </label> <br />
-          </div>
-        )
-      })}
-    </div>
-    <div style={{margin:20}}>
-      <Script ScriptID={ScriptID}/>
-    </div>
-    </div>
-   
+      <div>
+        Run Orders:<select value={selectedRunOrderTitle} onChange={handleSelectionChange}>
+          <option value="" disabled>Select a Run Order</option>
+          {runOrderTitles && runOrderTitles.map((user, i) => (
+            <option key={i} value={user.id}>{user.title}</option>
+          ))}
+        </select>
+      </div>
+      <div style={{ display: 'flex' }}>
+        <div style={{ minWidth: 300 }}>
+          {slugs?.map((val, i) => {
+            return (
+              <div key={i}>
+                {i} <label onClick={() => setScriptID(val.ScriptID)} style={{ cursor: 'pointer' }}>{val.SlugName} </label> <br />
+              </div>
+            )
+          })}
+        </div>
 
+      </div>
+    </div>
+    <div style={{ margin: 0 }}>
+      <Script ScriptID={ScriptID} />
+    </div>
+    </div>
   </div>);
 
 }
