@@ -8,6 +8,8 @@ export default function Home() {
   const [selectedRunOrderTitle, setSelectedRunOrderTitle] = useState('');
   const [slugs, setSlugs] = useState([]);
   const [ScriptID, setScriptID] = useState('');
+  const [currentSlug, setCurrentSlug] = useState(-1);
+  const [currentSlugSlugName, setCurrentSlugSlugName] = useState('');
 
 
   useEffect(() => {
@@ -41,37 +43,44 @@ export default function Home() {
 
   const handleSelectionChange = (e) => {
     setSelectedRunOrderTitle(e.target.value);
+    setCurrentSlugSlugName('');
+    setCurrentSlug(-1);
+    setScriptID('');
   };
 
 
 
   return (<div>
-<div style={{display:'flex'}}>
-    <div>
-      <div>
-        Run Orders:<select value={selectedRunOrderTitle} onChange={handleSelectionChange}>
-          <option value="" disabled>Select a Run Order</option>
-          {runOrderTitles && runOrderTitles.map((user, i) => (
-            <option key={i} value={user.id}>{user.title}</option>
-          ))}
-        </select>
-      </div>
-      <div style={{ display: 'flex' }}>
-        <div style={{ minWidth: 300 }}>
-          {slugs?.map((val, i) => {
-            return (
-              <div key={i}>
-                {i} <label onClick={() => setScriptID(val.ScriptID)} style={{ cursor: 'pointer' }}>{val.SlugName} </label> <br />
-              </div>
-            )
-          })}
+    <div style={{ display: 'flex' }}>
+      <div style={{ maxHeight: 800, border: '1px solid red', overflow:'auto' }}>
+        <div >
+          Run Orders:<select value={selectedRunOrderTitle} onChange={handleSelectionChange}>
+            <option value="" disabled>Select a Run Order</option>
+            {runOrderTitles && runOrderTitles.map((runOrderTitle, i) => (
+              <option key={i} value={runOrderTitle.title}>{runOrderTitle.title}</option>
+            ))}
+          </select>
         </div>
+        <div style={{ display: 'flex' }}>
+          <div style={{ minWidth: 300 }}>
+            {slugs?.map((val, i) => {
+              return (
+                <div onClick={() => {
+                  setScriptID(val.ScriptID);
+                  setCurrentSlug(i);
+                  setCurrentSlugSlugName(val.SlugName)
+                }} key={i} style={{ backgroundColor: currentSlug === i ? 'green' : '#E7DBD8', margin: 10 }}>
+                  {i} <label  style={{ cursor: 'pointer' }}>{val.SlugName} </label> <br />
+                </div>
+              )
+            })}
+          </div>
 
+        </div>
       </div>
-    </div>
-    <div style={{ margin: 0 }}>
-      <Script ScriptID={ScriptID} />
-    </div>
+      <div style={{ margin: 10 }}>
+        <Script ScriptID={ScriptID} title={selectedRunOrderTitle + ' ' + currentSlugSlugName} />
+      </div>
     </div>
   </div>);
 

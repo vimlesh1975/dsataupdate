@@ -2,7 +2,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-export default function Home({ScriptID}) {
+export default function Home({ScriptID, title}) {
   const [content, setContent] = useState('');
   const [timeoutId, setTimeoutId] = useState(null);
 
@@ -49,14 +49,19 @@ export default function Home({ScriptID}) {
 
   return (
     <div>
-      Content:
-      <textarea
+      <div>
+     {title}
+     </div>
+     <div>
+     <textarea
         value={content}
         onChange={handleContentChange}
         rows="30"
         cols="110"
         style={{fontSize:20}}
       />
+     </div>
+     
     </div>
   );
 }
