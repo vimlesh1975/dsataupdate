@@ -52,7 +52,7 @@ export default function Home() {
 
   return (<div>
     <div style={{ display: 'flex' }}>
-      <div style={{ maxHeight: 800, border: '1px solid red', overflow:'auto' }}>
+      <div style={{ maxHeight: '100vh', border: '1px solid red', overflow:'auto' }}>
         <div >
           Run Orders:<select value={selectedRunOrderTitle} onChange={handleSelectionChange}>
             <option value="" disabled>Select a Run Order</option>
