@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import { fabric } from 'fabric';
 
-const FabricCanvas = ({ jsonContent }) => {
+const FabricCanvas = ({ jsonContent, setCanvas  }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -28,11 +28,20 @@ const FabricCanvas = ({ jsonContent }) => {
       }
     }
 
+    const handleObjectModified = () => {
+      const updatedJSON = JSON.stringify({pageValue:canvas.toJSON()});
+      setCanvas(updatedJSON);
+    };
+  
+    canvas.on('object:modified', handleObjectModified);
+
     // Clean up on unmount
     return () => {
       canvas.dispose();
     };
-  }, [jsonContent]);
+  }, [jsonContent, setCanvas]);
+
+
 
   return (
     <div style={{border:'1px solid blue'}}>

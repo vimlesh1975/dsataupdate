@@ -7,7 +7,7 @@ export default function Home({ ScriptID, title }) {
     const [currentGraphics, setCurrentGraphics] = useState(-1);
     const [graphicsID, setGraphicsID] = useState('');
     const [graphicsText1, seGraphicsText1] = useState('');
-
+    const [canvas, setCanvas] = useState('');
 
     useEffect(() => {
         async function fetchData() {
@@ -23,6 +23,28 @@ export default function Home({ ScriptID, title }) {
         fetchData();
     }, [ScriptID]);
 
+    const updateGraphics=async (graphicsID)=>{
+        const newGrapphics=graphics.map(val=>(val.GraphicsID===graphicsID)?{...val, Graphicstext1:canvas}:val);
+        setGraphics(newGrapphics);
+        try {
+            const res = await fetch('/api/getGraphics', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ content: canvas ,graphicsID}),
+            });
+            const data = await res.json();
+            console.log(data.message);
+          } catch (error) {
+            console.error('Error saving content:', error);
+          }
+    }
+
+    const playGraphics=()=>{
+        
+    }
+
     return (<div>
         <div style={{display:'flex'}}>
         <div>
@@ -33,14 +55,18 @@ export default function Home({ ScriptID, title }) {
                     setCurrentGraphics(i)
                     seGraphicsText1(val.Graphicstext1)
                 }} key={i} style={{ backgroundColor: currentGraphics === i ? 'green' : '#E7DBD8', margin: 10 }}>
-                    {i} <label style={{ cursor: 'pointer' }}>{val.GraphicsTemplate} </label> <br />
+                    {val.GraphicsOrder} <label style={{ cursor: 'pointer' }}>{val.GraphicsTemplate} </label> <br />
                 </div>
             )
         })}
         </div>
     
         <div>
-       < FabricCanvas jsonContent={graphicsText1} />
+        <FabricCanvas jsonContent={graphicsText1} setCanvas={setCanvas} />
+        </div>
+        <div>
+            <button onClick={()=>updateGraphics(graphicsID)}>Update</button>
+            <button onClick={()=>playGraphics()}>Play</button>
         </div>
         </div>
     

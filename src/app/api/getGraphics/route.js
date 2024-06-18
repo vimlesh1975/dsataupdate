@@ -16,3 +16,19 @@ export async function GET(req) {
     });
   }
 }
+
+
+export async function POST(req) {
+  try {
+    const { content, graphicsID } = await req.json();
+    await pool.query(`UPDATE graphics SET GraphicsText1 = ?  where GraphicsID='${graphicsID}'`, [content]);
+    return new Response(JSON.stringify({ message: 'Content updated successfully' }), {
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}
