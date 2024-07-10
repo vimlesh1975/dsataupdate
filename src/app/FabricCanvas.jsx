@@ -8,11 +8,11 @@ const FabricCanvas = ({ jsonContent, setCanvas  }) => {
 
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current);
-    canvas.setZoom(0.4)
+    canvas.setZoom(0.42)
 
     // Set canvas dimensions
-    canvas.setWidth(600);
-    canvas.setHeight(400);
+    canvas.setWidth(800);
+    canvas.setHeight(450);
 
     if (jsonContent) {
       try {

@@ -66,7 +66,7 @@ export default function Home({ ScriptID, title }) {
         </div>
         <div>
             <button onClick={()=>updateGraphics(graphicsID)}>Update</button>
-            <button onClick={()=>playGraphics()}>Play</button>
+            {/* <button onClick={()=>playGraphics()}>Play</button> */}
         </div>
         </div>
     
